@@ -5,7 +5,7 @@ module "ami" {
 resource "aws_instance" "celo_proxy" {
   for_each = var.proxies
 
-  ami                    = module.ami.ami_ids.ubuntu_18_04
+  ami                    = module.ami.ami_ids.ubuntu_20_04
   instance_type          = var.instance_type
   subnet_id              = var.subnet_id
   vpc_security_group_ids = [var.security_group_id]
