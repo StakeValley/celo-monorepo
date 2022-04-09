@@ -91,37 +91,37 @@ variable ethstats_host {
   description = "Hostname for ethstats"
 }
 
-variable twilio_messaging_service_sid {
-  type = string
-}
-
-variable twilio_verify_service_sid {
-  type = string
-}
-
-variable twilio_account_sid {
-  type = string
-}
-
-variable twilio_unsupported_regions {
-  type = string
-}
-
-variable twilio_auth_token {
-  type = string
-}
-
-variable nexmo_api_key {
-  type = string
-}
-
-variable nexmo_api_secret {
-  type = string
-}
-
-variable nexmo_unsupported_regions {
-  type = string
-}
+# variable twilio_messaging_service_sid {
+#   type = string
+# }
+# 
+# variable twilio_verify_service_sid {
+#   type = string
+# }
+# 
+# variable twilio_account_sid {
+#   type = string
+# }
+# 
+# variable twilio_unsupported_regions {
+#   type = string
+# }
+# 
+# variable twilio_auth_token {
+#   type = string
+# }
+# 
+# variable nexmo_api_key {
+#   type = string
+# }
+# 
+# variable nexmo_api_secret {
+#   type = string
+# }
+# 
+# variable nexmo_unsupported_regions {
+#   type = string
+# }
 
 variable proxies {
   description = "Configuration for zero or more proxies in each availability zone."
@@ -149,44 +149,44 @@ variable proxies {
   })
 }
 
-variable validators {
-  description = "Configuration for zero or more validators in each availability zone"
-  type = object({
-    az1 = map(object({
-      name                             = string
-      signer_address                   = string
-      signer_private_key_filename      = string
-      signer_private_key_file_contents = string
-      signer_private_key_password      = string
-    }))
-    az2 = map(object({
-      name                             = string
-      signer_address                   = string
-      signer_private_key_filename      = string
-      signer_private_key_file_contents = string
-      signer_private_key_password      = string
-    }))
-  })
-}
+#variable validators {
+#  description = "Configuration for zero or more validators in each availability zone"
+#  type = object({
+#    az1 = map(object({
+#      name                             = string
+#      signer_address                   = string
+#      signer_private_key_filename      = string
+#      signer_private_key_file_contents = string
+#      signer_private_key_password      = string
+#    }))
+#    az2 = map(object({
+#      name                             = string
+#      signer_address                   = string
+#      signer_private_key_filename      = string
+#      signer_private_key_file_contents = string
+#      signer_private_key_password      = string
+#    }))
+#  })
+#}
 
-variable attestation_services {
-  description = "Configuration for zero or more attestation nodes in each availability zone"
-  type = object({
-    az1 = map(object({
-      validator_name                               = string
-      validator_address                            = string
-      attestation_signer_address                   = string
-      attestation_signer_private_key_filename      = string
-      attestation_signer_private_key_file_contents = string
-      attestation_signer_private_key_password      = string
-    }))
-    az2 = map(object({
-      validator_name                               = string
-      validator_address                            = string
-      attestation_signer_address                   = string
-      attestation_signer_private_key_filename      = string
-      attestation_signer_private_key_file_contents = string
-      attestation_signer_private_key_password      = string
-    }))
-  })
-}
+# variable attestation_services {
+#   description = "Configuration for zero or more attestation nodes in each availability zone"
+#   type = object({
+#     az1 = map(object({
+#       validator_name                               = string
+#       validator_address                            = string
+#       attestation_signer_address                   = string
+#       attestation_signer_private_key_filename      = string
+#       attestation_signer_private_key_file_contents = string
+#       attestation_signer_private_key_password      = string
+#     }))
+#     az2 = map(object({
+#       validator_name                               = string
+#       validator_address                            = string
+#       attestation_signer_address                   = string
+#       attestation_signer_private_key_filename      = string
+#       attestation_signer_private_key_file_contents = string
+#       attestation_signer_private_key_password      = string
+#     }))
+#   })
+# }
