@@ -5,9 +5,11 @@ CELO_VALIDATOR_SIGNER_ADDRESS=${validator_signer_address}
 NODE_DIRECTORY=/home/ubuntu/celo-proxy-node
 
 mkdir $NODE_DIRECTORY
+mkdir $NODE_DIRECTORY/keystore
 cd $NODE_DIRECTORY
 
 PROXY_ADDRESS=${proxy_address}
+
 echo -n '${proxy_private_key_password}' > .password
 echo -n '${proxy_private_key_file_contents}' > keystore/${proxy_private_key_filename}
 echo -n '${proxy_node_private_key}' > .nodeprivatekey
@@ -22,10 +24,4 @@ else
 fi
 
 # Adapted from https://docs.celo.org/getting-started/baklava-testnet/running-a-validator-in-baklava#deploy-a-proxy
-docker run -d --name celo-proxy $DOCKER_LOGGING_PARAMS --restart unless-stopped \
-  -p 30303:30303 -p 30303:30303/udp -p 30503:30503 -p 30503:30503/udp \
-  -v $PWD:/root/.celo $CELO_IMAGE --verbosity 3 --syncmode full --nousb \ 
-  --proxy.proxy --proxy.proxiedvalidatoraddress $CELO_VALIDATOR_SIGNER_ADDRESS --proxy.internalendpoint :30503 \ 
-  --etherbase $PROXY_ADDRESS --unlock $PROXY_ADDRESS --password /root/.celo/.password \
-  --allow-insecure-unlock --baklava --datadir /root/.celo \
-  --celostats=${validator_name}@${ethstats_host}
+docker run -d --name celo-proxy $DOCKER_LOGGING_PARAMS --restart unless-stopped -p 30303:30303 -p 30303:30303/udp -p 30503:30503 -p 30503:30503/udp -v $PWD:/root/.celo $CELO_IMAGE --verbosity 3 --syncmode full --nousb  --proxy.proxy --proxy.proxiedvalidatoraddress $CELO_VALIDATOR_SIGNER_ADDRESS --proxy.internalendpoint :30503 --etherbase $PROXY_ADDRESS --unlock $PROXY_ADDRESS --password /root/.celo/.password --allow-insecure-unlock --baklava --datadir /root/.celo --celostats=${validator_name}@${ethstats_host}
