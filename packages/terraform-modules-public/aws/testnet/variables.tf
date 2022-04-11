@@ -57,7 +57,6 @@ variable cloudwatch_log_group_names {
     attestation_service = ""
     attestation_node    = ""
   }
-
 }
 
 variable cloudwatch_collect_disk_and_memory_usage {
@@ -149,25 +148,25 @@ variable proxies {
   })
 }
 
-#variable validators {
-#  description = "Configuration for zero or more validators in each availability zone"
-#  type = object({
-#    az1 = map(object({
-#      name                             = string
-#      signer_address                   = string
-#      signer_private_key_filename      = string
-#      signer_private_key_file_contents = string
-#      signer_private_key_password      = string
-#    }))
-#    az2 = map(object({
-#      name                             = string
-#      signer_address                   = string
-#      signer_private_key_filename      = string
-#      signer_private_key_file_contents = string
-#      signer_private_key_password      = string
-#    }))
-#  })
-#}
+variable validators {
+  description = "Configuration for zero or more validators in each availability zone"
+  type = object({
+    az1 = map(object({
+      name                             = string
+      signer_address                   = string
+      signer_private_key_filename      = string
+      signer_private_key_file_contents = string
+      signer_private_key_password      = string
+    }))
+    az2 = map(object({
+      name                             = string
+      signer_address                   = string
+      signer_private_key_filename      = string
+      signer_private_key_file_contents = string
+      signer_private_key_password      = string
+    }))
+  })
+}
 
 # variable attestation_services {
 #   description = "Configuration for zero or more attestation nodes in each availability zone"
