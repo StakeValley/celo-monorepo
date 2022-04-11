@@ -44,6 +44,7 @@ module "celo_proxy_az1" {
   iam_instance_profile                     = var.iam_instance_profiles.proxy
   cloudwatch_log_group_name                = var.cloudwatch_log_group_names.proxy
   cloudwatch_collect_disk_and_memory_usage = var.cloudwatch_collect_disk_and_memory_usage
+  chaindata_archive_url                    = var.chaindata_archive_url
 
   proxies = var.proxies.az1
 }
@@ -61,6 +62,7 @@ module "celo_proxy_az2" {
   iam_instance_profile                     = var.iam_instance_profiles.proxy
   cloudwatch_log_group_name                = var.cloudwatch_log_group_names.proxy
   cloudwatch_collect_disk_and_memory_usage = var.cloudwatch_collect_disk_and_memory_usage
+  chaindata_archive_url                    = var.chaindata_archive_url
 
   proxies = var.proxies.az2
 }
@@ -111,6 +113,7 @@ module "celo_validator_az1" {
   iam_instance_profile                     = var.iam_instance_profiles.validator
   cloudwatch_log_group_name                = var.cloudwatch_log_group_names.validator
   cloudwatch_collect_disk_and_memory_usage = var.cloudwatch_collect_disk_and_memory_usage
+  chaindata_archive_url                    = var.chaindata_archive_url
 
   validators = local.validator_params.az1
 }
@@ -128,6 +131,7 @@ module "celo_validator_az2" {
   iam_instance_profile                     = var.iam_instance_profiles.validator
   cloudwatch_log_group_name                = var.cloudwatch_log_group_names.validator
   cloudwatch_collect_disk_and_memory_usage = var.cloudwatch_collect_disk_and_memory_usage
+  chaindata_archive_url                    = var.chaindata_archive_url
 
   validators = local.validator_params.az2
 }

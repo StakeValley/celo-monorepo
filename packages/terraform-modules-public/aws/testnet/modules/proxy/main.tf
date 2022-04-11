@@ -19,6 +19,7 @@ resource "aws_instance" "celo_proxy" {
   user_data = join("\n", [
     file("${path.module}/../startup-scripts/install-base.sh"),
     var.cloudwatch_collect_disk_and_memory_usage ? file("${path.module}/../startup-scripts/install-cloudwatch-agent.sh") : "",
+    var.chaindata_archive_url != "" ? file("${path.module}/../startup-scripts/install-awscli.sh") : "",
     file("${path.module}/../startup-scripts/install-docker.sh"),
     file("${path.module}/../startup-scripts/install-chrony.sh"),
     templatefile("${path.module}/../startup-scripts/run-proxy-node.sh", {
@@ -34,6 +35,7 @@ resource "aws_instance" "celo_proxy" {
       proxy_node_private_key          = each.value.proxy_node_private_key
       cloudwatch_log_group_name       = var.cloudwatch_log_group_name
       cloudwatch_log_stream_name      = "celo_proxy_${each.key}"
+      chaindata_archive_url           = var.chaindata_archive_url
     }),
     file("${path.module}/../startup-scripts/final-hardening.sh")
   ])

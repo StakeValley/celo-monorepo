@@ -189,3 +189,8 @@ variable validators {
 #     }))
 #   })
 # }
+
+variable chaindata_archive_url {
+    type = string
+    default = ""
+}
