@@ -66,3 +66,8 @@ variable cloudwatch_collect_disk_and_memory_usage {
   type    = bool
   default = false
 }
+
+variable chaindata_archive_url {
+    type = string
+    default = ""
+}

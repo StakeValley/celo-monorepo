@@ -57,7 +57,6 @@ variable cloudwatch_log_group_names {
     attestation_service = ""
     attestation_node    = ""
   }
-
 }
 
 variable cloudwatch_collect_disk_and_memory_usage {
@@ -91,37 +90,37 @@ variable ethstats_host {
   description = "Hostname for ethstats"
 }
 
-variable twilio_messaging_service_sid {
-  type = string
-}
-
-variable twilio_verify_service_sid {
-  type = string
-}
-
-variable twilio_account_sid {
-  type = string
-}
-
-variable twilio_unsupported_regions {
-  type = string
-}
-
-variable twilio_auth_token {
-  type = string
-}
-
-variable nexmo_api_key {
-  type = string
-}
-
-variable nexmo_api_secret {
-  type = string
-}
-
-variable nexmo_unsupported_regions {
-  type = string
-}
+# variable twilio_messaging_service_sid {
+#   type = string
+# }
+# 
+# variable twilio_verify_service_sid {
+#   type = string
+# }
+# 
+# variable twilio_account_sid {
+#   type = string
+# }
+# 
+# variable twilio_unsupported_regions {
+#   type = string
+# }
+# 
+# variable twilio_auth_token {
+#   type = string
+# }
+# 
+# variable nexmo_api_key {
+#   type = string
+# }
+# 
+# variable nexmo_api_secret {
+#   type = string
+# }
+# 
+# variable nexmo_unsupported_regions {
+#   type = string
+# }
 
 variable proxies {
   description = "Configuration for zero or more proxies in each availability zone."
@@ -189,4 +188,9 @@ variable attestation_services {
       attestation_signer_private_key_password      = string
     }))
   })
+}
+
+variable chaindata_archive_url {
+    type = string
+    default = ""
 }
