@@ -72,11 +72,20 @@ variable nexmo_unsupported_regions {
   type = string
 }
 
+variable messagebird_api_key {
+  type = string
+}
+
+variable messagebird_unsupported_regions {
+  type = string
+}
+
 variable attestation_services {
   description = "Configuration for attestation nodes."
   type = map(object({
     validator_name                               = string
     validator_address                            = string
+    proxy_private_ip                             = string
     attestation_signer_address                   = string
     attestation_signer_private_key_filename      = string
     attestation_signer_private_key_file_contents = string

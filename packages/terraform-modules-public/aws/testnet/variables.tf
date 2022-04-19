@@ -90,26 +90,26 @@ variable ethstats_host {
   description = "Hostname for ethstats"
 }
 
-# variable twilio_messaging_service_sid {
-#   type = string
-# }
-# 
-# variable twilio_verify_service_sid {
-#   type = string
-# }
-# 
-# variable twilio_account_sid {
-#   type = string
-# }
-# 
-# variable twilio_unsupported_regions {
-#   type = string
-# }
-# 
-# variable twilio_auth_token {
-#   type = string
-# }
-# 
+variable twilio_messaging_service_sid {
+  type = string
+}
+
+variable twilio_verify_service_sid {
+  type = string
+}
+
+variable twilio_account_sid {
+  type = string
+}
+
+variable twilio_unsupported_regions {
+  type = string
+}
+
+variable twilio_auth_token {
+  type = string
+}
+
 # variable nexmo_api_key {
 #   type = string
 # }
