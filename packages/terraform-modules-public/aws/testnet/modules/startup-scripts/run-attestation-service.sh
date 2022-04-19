@@ -10,9 +10,6 @@ mkdir $NODE_DIRECTORY/keystore
 
 cd $NODE_DIRECTORY
 
-docker run -v $PWD:/root/.celo --rm $CELO_IMAGE init /celo/genesis.json
-export BOOTNODE_ENODES="$(docker run --rm --entrypoint cat $CELO_IMAGE /celo/bootnodes)"
-
 export CELO_ATTESTATION_SIGNER_ADDRESS=${attestation_signer_address}
 echo -n '${attestation_signer_private_key_password}' > .password
 echo -n '${attestation_signer_private_key_file_contents}' > keystore/${attestation_signer_private_key_filename}
@@ -25,7 +22,7 @@ echo 'DATABASE_URL=${database_url}' >> $CONFIG_FILE_PATH
 echo 'CELO_PROVIDERS=http://${proxy_internal_ip}:30503' >> $CONFIG_FILE_PATH
 echo 'CELO_VALIDATOR_ADDRESS=${validator_address}' >> $CONFIG_FILE_PATH
 echo 'ATTESTATION_SIGNER_ADDRESS=${attestation_signer_address}' >> $CONFIG_FILE_PATH
-echo "ATTESTATION_SIGNER_KEYSTORE_DIRPATH=$PWD" >> $CONFIG_FILE_PATH
+echo 'ATTESTATION_SIGNER_KEYSTORE_DIRPATH=/root/.celo' >> $CONFIG_FILE_PATH
 echo 'ATTESTATION_SIGNER_KEYSTORE_PASSPHRASE=${attestation_signer_private_key_password}' >> $CONFIG_FILE_PATH
 
 # TODO: add twilioverify, nexmo, and messagebird 
@@ -77,4 +74,4 @@ else
   DOCKER_LOGGING_PARAMS="--log-driver=awslogs --log-opt awslogs-group=$ATTESTATION_SERVICE_CLOUDWATCH_LOG_GROUP_NAME --log-opt awslogs-stream=$ATTESTATION_SERVICE_CLOUDWATCH_LOG_STREAM_NAME"
 fi
 
-docker run -d --name celo-attestation-service $DOCKER_LOGGING_PARAMS --restart always --entrypoint /bin/bash --network host --env-file $CONFIG_FILE_PATH -p 80:80 $CELO_IMAGE_ATTESTATION -c " cd /celo-monorepo/packages/attestation-service && yarn run db:migrate && yarn start "
+docker run -d --name celo-attestation-service $DOCKER_LOGGING_PARAMS --restart always --entrypoint /bin/bash --network host --env-file $CONFIG_FILE_PATH -p 80:80 -v $PWD:/root/.celo $CELO_IMAGE_ATTESTATION -c " cd /celo-monorepo/packages/attestation-service && yarn run db:migrate && yarn start "
