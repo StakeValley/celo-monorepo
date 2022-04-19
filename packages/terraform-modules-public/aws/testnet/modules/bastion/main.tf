@@ -3,7 +3,7 @@ module "ami" {
 }
 
 resource "aws_instance" "bastion" {
-  ami                         = module.ami.ami_ids.ubuntu_20_04
+  ami                         = module.ami.ami_ids.ubuntu_latest
   instance_type               = var.instance_type
   subnet_id                   = var.subnet_id
   associate_public_ip_address = true
