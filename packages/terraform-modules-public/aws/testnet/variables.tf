@@ -168,27 +168,27 @@ variable validators {
   })
 }
 
-# variable attestation_services {
-#   description = "Configuration for zero or more attestation nodes in each availability zone"
-#   type = object({
-#     az1 = map(object({
-#       validator_name                               = string
-#       validator_address                            = string
-#       attestation_signer_address                   = string
-#       attestation_signer_private_key_filename      = string
-#       attestation_signer_private_key_file_contents = string
-#       attestation_signer_private_key_password      = string
-#     }))
-#     az2 = map(object({
-#       validator_name                               = string
-#       validator_address                            = string
-#       attestation_signer_address                   = string
-#       attestation_signer_private_key_filename      = string
-#       attestation_signer_private_key_file_contents = string
-#       attestation_signer_private_key_password      = string
-#     }))
-#   })
-# }
+variable attestation_services {
+  description = "Configuration for zero or more attestation nodes in each availability zone"
+  type = object({
+    az1 = map(object({
+      validator_name                               = string
+      validator_address                            = string
+      attestation_signer_address                   = string
+      attestation_signer_private_key_filename      = string
+      attestation_signer_private_key_file_contents = string
+      attestation_signer_private_key_password      = string
+    }))
+    az2 = map(object({
+      validator_name                               = string
+      validator_address                            = string
+      attestation_signer_address                   = string
+      attestation_signer_private_key_filename      = string
+      attestation_signer_private_key_file_contents = string
+      attestation_signer_private_key_password      = string
+    }))
+  })
+}
 
 variable chaindata_archive_url {
     type = string
