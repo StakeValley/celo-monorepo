@@ -17,17 +17,6 @@ export CELO_ATTESTATION_SIGNER_ADDRESS=${attestation_signer_address}
 echo -n '${attestation_signer_private_key_password}' > .password
 echo -n '${attestation_signer_private_key_file_contents}' > keystore/${attestation_signer_private_key_filename}
 
-ATTESTATION_NODE_CLOUDWATCH_LOG_GROUP_NAME=${cloudwatch_attestation_node_log_group_name}
-ATTESTATION_NODE_CLOUDWATCH_LOG_STREAM_NAME=${cloudwatch_attestation_node_log_stream_name}
-
-if [[ -z $ATTESTATION_NODE_CLOUDWATCH_LOG_GROUP_NAME || -z $ATTESTATION_NODE_CLOUDWATCH_LOG_STREAM_NAME ]]; then
-  DOCKER_LOGGING_PARAMS=''
-else
-  DOCKER_LOGGING_PARAMS="--log-driver=awslogs --log-opt awslogs-group=$ATTESTATION_NODE_CLOUDWATCH_LOG_GROUP_NAME --log-opt awslogs-stream=$ATTESTATION_NODE_CLOUDWATCH_LOG_STREAM_NAME"
-fi
-
-docker run -d --name celo-attestations $DOCKER_LOGGING_PARAMS --restart always -p 127.0.0.1:8545:8545 -v $PWD:/root/.celo $CELO_IMAGE --verbosity 3 --networkid $NETWORK_ID --syncmode full --nousb --rpc --rpcaddr 0.0.0.0 --rpcapi eth,net,web3,debug,admin --unlock $CELO_ATTESTATION_SIGNER_ADDRESS --password /root/.celo/.password --bootnodes $BOOTNODE_ENODES --allow-insecure-unlock
-
 export CELO_IMAGE_ATTESTATION=${celo_image_attestation}
 export CONFIG_FILE_PATH=.attestationconfig
 
@@ -78,7 +67,6 @@ echo 'APP_SIGNATURE=${attestation_app_signature}' >> $CONFIG_FILE_PATH
 
 echo 'LOG_FORMAT=json' >> $CONFIG_FILE_PATH
 echo 'LOG_LEVEL=info' >> $CONFIG_FILE_PATH
-
 
 ATTESTATION_SERVICE_CLOUDWATCH_LOG_GROUP_NAME=${cloudwatch_attestation_service_log_group_name}
 ATTESTATION_SERVICE_CLOUDWATCH_LOG_STREAM_NAME=${cloudwatch_attestation_service_log_stream_name}
