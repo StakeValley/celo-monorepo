@@ -11,19 +11,25 @@ mkdir $NODE_DIRECTORY/keystore
 cd $NODE_DIRECTORY
 
 export CELO_ATTESTATION_SIGNER_ADDRESS=${attestation_signer_address}
-echo -n '${attestation_signer_private_key_password}' > .password
-echo -n '${attestation_signer_private_key_file_contents}' > keystore/${attestation_signer_private_key_filename}
+
+SECRET_ID=${attestation_signer_private_key_arn}
+GET_SECRET_VALUE_JSON=$(aws secretsmanager get-secret-value --secret-id "$SECRET_ID")
+KEY_FILENAME=$(echo $GET_SECRET_VALUE_JSON | jq --raw-output '.SecretString' | jq -r .filename)
+KEY_FILE_CONTENTS=$(echo $GET_SECRET_VALUE_JSON | jq --raw-output '.SecretString' | jq -r .file_contents)
+KEY_FILE_PASSWORD=$(echo $GET_SECRET_VALUE_JSON | jq --raw-output '.SecretString' | jq -r .password)
+
+echo $KEY_FILE_CONTENTS > keystore/$KEY_FILENAME
+echo $KEY_FILE_PASSWORD > .password
 
 export CELO_IMAGE_ATTESTATION=${celo_image_attestation}
 export CONFIG_FILE_PATH=.attestationconfig
 
 # adapted from https://github.com/StakeValley/celo-monorepo/blob/master/packages/attestation-service/config/.env.development
 echo 'DATABASE_URL=${database_url}' >> $CONFIG_FILE_PATH
-echo 'CELO_PROVIDERS=http://${proxy_internal_ip}:30503' >> $CONFIG_FILE_PATH
-echo 'CELO_VALIDATOR_ADDRESS=${validator_address}' >> $CONFIG_FILE_PATH
-echo 'ATTESTATION_SIGNER_ADDRESS=${attestation_signer_address}' >> $CONFIG_FILE_PATH
+echo 'CELO_PROVIDERS=https://baklava-forno.celo-testnet.org,http://${proxy_internal_ip}' >> $CONFIG_FILE_PATH
+echo 'CELO_VALIDATOR_ADDRESS=0x${validator_address}' >> $CONFIG_FILE_PATH
+echo 'ATTESTATION_SIGNER_ADDRESS=0x${attestation_signer_address}' >> $CONFIG_FILE_PATH
 echo 'ATTESTATION_SIGNER_KEYSTORE_DIRPATH=/root/.celo' >> $CONFIG_FILE_PATH
-echo 'ATTESTATION_SIGNER_KEYSTORE_PASSPHRASE=${attestation_signer_private_key_password}' >> $CONFIG_FILE_PATH
 
 # TODO: add twilioverify, nexmo, and messagebird 
 echo 'SMS_PROVIDERS=twiliomessaging' >> $CONFIG_FILE_PATH

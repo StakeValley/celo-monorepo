@@ -10,7 +10,7 @@ cd $NODE_DIRECTORY
 
 PROXY_ADDRESS=${proxy_address}
 
-SECRET_ID=${proxy_node_private_key_arn}
+SECRET_ID=${proxy_private_key_arn}
 GET_SECRET_VALUE_JSON=$(aws secretsmanager get-secret-value --secret-id "$SECRET_ID")
 KEY_FILENAME=$(echo $GET_SECRET_VALUE_JSON | jq --raw-output '.SecretString' | jq -r .filename)
 KEY_FILE_CONTENTS=$(echo $GET_SECRET_VALUE_JSON | jq --raw-output '.SecretString' | jq -r .file_contents)

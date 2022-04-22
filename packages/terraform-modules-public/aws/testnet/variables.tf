@@ -129,9 +129,7 @@ variable proxies {
       validator_name                  = string
       validator_signer_address        = string
       proxy_address                   = string
-      proxy_private_key_filename      = string
-      proxy_private_key_file_contents = string
-      proxy_private_key_password      = string
+      proxy_private_key_arn           = string
       proxy_node_private_key          = string
       proxy_enode                     = string
     }))
@@ -139,9 +137,7 @@ variable proxies {
       validator_name                  = string
       validator_signer_address        = string
       proxy_address                   = string
-      proxy_private_key_filename      = string
-      proxy_private_key_file_contents = string
-      proxy_private_key_password      = string
+      proxy_private_key_arn           = string
       proxy_node_private_key          = string
       proxy_enode                     = string
     }))
@@ -152,18 +148,14 @@ variable validators {
   description = "Configuration for zero or more validators in each availability zone"
   type = object({
     az1 = map(object({
-      name                             = string
-      signer_address                   = string
-      signer_private_key_filename      = string
-      signer_private_key_file_contents = string
-      signer_private_key_password      = string
+      name                        = string
+      signer_address              = string
+      signer_private_key_arn      = string
     }))
     az2 = map(object({
-      name                             = string
-      signer_address                   = string
-      signer_private_key_filename      = string
-      signer_private_key_file_contents = string
-      signer_private_key_password      = string
+      name                        = string
+      signer_address              = string
+      signer_private_key_arn      = string
     }))
   })
 }
@@ -172,20 +164,16 @@ variable attestation_services {
   description = "Configuration for zero or more attestation nodes in each availability zone"
   type = object({
     az1 = map(object({
-      validator_name                               = string
-      validator_address                            = string
-      attestation_signer_address                   = string
-      attestation_signer_private_key_filename      = string
-      attestation_signer_private_key_file_contents = string
-      attestation_signer_private_key_password      = string
+      validator_name                          = string
+      validator_address                       = string
+      attestation_signer_address              = string
+      attestation_signer_private_key_arn      = string
     }))
     az2 = map(object({
-      validator_name                               = string
-      validator_address                            = string
-      attestation_signer_address                   = string
-      attestation_signer_private_key_filename      = string
-      attestation_signer_private_key_file_contents = string
-      attestation_signer_private_key_password      = string
+      validator_name                          = string
+      validator_address                       = string
+      attestation_signer_address              = string
+      attestation_signer_private_key_arn      = string
     }))
   })
 }

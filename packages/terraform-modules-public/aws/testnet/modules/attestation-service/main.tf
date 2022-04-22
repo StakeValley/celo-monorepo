@@ -26,9 +26,7 @@ resource "aws_instance" "attestation_service" {
       validator_address                              = each.value.validator_address
       attestation_app_signature                      = "celo_attestation_service_${each.key}"
       attestation_signer_address                     = each.value.attestation_signer_address
-      attestation_signer_private_key_filename        = each.value.attestation_signer_private_key_filename
-      attestation_signer_private_key_file_contents   = each.value.attestation_signer_private_key_file_contents
-      attestation_signer_private_key_password        = each.value.attestation_signer_private_key_password
+      attestation_signer_private_key_arn             = each.value.attestation_signer_private_key_arn
       proxy_internal_ip                              = each.value.proxy_private_ip
       database_url                                   = var.database_url
       twilio_messaging_service_sid                   = var.twilio_messaging_service_sid
