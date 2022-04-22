@@ -27,9 +27,7 @@ resource "aws_instance" "celo_validator" {
       celo_network_id                            = var.celo_network_id
       ethstats_host                              = var.ethstats_host
       validator_signer_address                   = each.value.signer_address
-      validator_signer_private_key_file_contents = each.value.signer_private_key_file_contents
-      validator_signer_private_key_filename      = each.value.signer_private_key_filename
-      validator_signer_private_key_password      = each.value.signer_private_key_password
+      validator_signer_private_key_arn           = each.value.signer_private_key_arn
       validator_name                             = each.value.name
       proxy_enode                                = each.value.proxy_enode
       proxy_internal_ip                          = each.value.proxy_private_ip
