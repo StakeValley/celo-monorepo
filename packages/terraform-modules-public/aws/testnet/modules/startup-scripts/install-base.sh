@@ -6,7 +6,8 @@ apt-get --assume-yes install \
     apt-show-versions \
     libpam-cracklib \
     fail2ban \
-    unzip
+    unzip \
+    jq
 
 SSH_CONFIG=/etc/ssh/sshd_config
 
