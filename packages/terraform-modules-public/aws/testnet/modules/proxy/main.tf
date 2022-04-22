@@ -29,9 +29,7 @@ resource "aws_instance" "celo_proxy" {
       validator_name                  = each.value.validator_name
       validator_signer_address        = each.value.validator_signer_address
       proxy_address                   = each.value.proxy_address
-      proxy_private_key_filename      = each.value.proxy_private_key_filename
-      proxy_private_key_file_contents = each.value.proxy_private_key_file_contents
-      proxy_private_key_password      = each.value.proxy_private_key_password
+      proxy_private_key_arn           = each.value.proxy_private_key_arn
       proxy_node_private_key          = each.value.proxy_node_private_key
       cloudwatch_log_group_name       = var.cloudwatch_log_group_name
       cloudwatch_log_stream_name      = "celo_proxy_${each.key}"

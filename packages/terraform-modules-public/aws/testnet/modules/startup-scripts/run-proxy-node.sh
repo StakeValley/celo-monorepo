@@ -10,8 +10,15 @@ cd $NODE_DIRECTORY
 
 PROXY_ADDRESS=${proxy_address}
 
-echo -n '${proxy_private_key_password}' > .password
-echo -n '${proxy_private_key_file_contents}' > keystore/${proxy_private_key_filename}
+SECRET_ID=${proxy_node_private_key_arn}
+GET_SECRET_VALUE_JSON=$(aws secretsmanager get-secret-value --secret-id "$SECRET_ID")
+KEY_FILENAME=$(echo $GET_SECRET_VALUE_JSON | jq --raw-output '.SecretString' | jq -r .filename)
+KEY_FILE_CONTENTS=$(echo $GET_SECRET_VALUE_JSON | jq --raw-output '.SecretString' | jq -r .file_contents)
+KEY_FILE_PASSWORD=$(echo $GET_SECRET_VALUE_JSON | jq --raw-output '.SecretString' | jq -r .password)
+
+echo $KEY_FILE_CONTENTS > keystore/$KEY_FILENAME
+echo $KEY_FILE_PASSWORD > .password
+
 echo -n '${proxy_node_private_key}' > .nodeprivatekey
 
 CLOUDWATCH_LOG_GROUP_NAME=${cloudwatch_log_group_name}
