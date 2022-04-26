@@ -26,17 +26,17 @@ resource "aws_instance" "celo_proxy" {
     file("${path.module}/../startup-scripts/install-docker.sh"),
     file("${path.module}/../startup-scripts/install-chrony.sh"),
     templatefile("${path.module}/../startup-scripts/run-proxy-node.sh", {
-      celo_image                  = var.celo_image
-      celo_network_id             = var.celo_network_id
-      ethstats_host               = var.ethstats_host
-      validator_name              = each.value.validator_name
-      validator_signer_address    = each.value.validator_signer_address
-      proxy_address               = each.value.proxy_address
-      proxy_private_key_arn       = each.value.proxy_private_key_arn
-      proxy_enode_private_key_arn = each.value.proxy_enode_private_key_arn
-      cloudwatch_log_group_name   = var.cloudwatch_log_group_name
-      cloudwatch_log_stream_name  = "celo_proxy_${each.key}"
-      chaindata_archive_url       = var.chaindata_archive_url
+      celo_image                    = var.celo_image
+      celo_network_id               = var.celo_network_id
+      ethstats_host                 = var.ethstats_host
+      validator_name                = each.value.validator_name
+      validator_signer_address      = each.value.validator_signer_address
+      proxy_address                 = each.value.proxy_address
+      proxy_account_private_key_arn = each.value.proxy_account_private_key_arn
+      proxy_enode_private_key_arn   = each.value.proxy_enode_private_key_arn
+      cloudwatch_log_group_name     = var.cloudwatch_log_group_name
+      cloudwatch_log_stream_name    = "celo_proxy_${each.key}"
+      chaindata_archive_url         = var.chaindata_archive_url
     }),
     file("${path.module}/../startup-scripts/final-hardening.sh")
   ])

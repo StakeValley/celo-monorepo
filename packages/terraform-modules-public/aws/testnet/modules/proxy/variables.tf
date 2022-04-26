@@ -41,11 +41,11 @@ variable "ethstats_host" {
 
 variable "proxies" {
   type = map(object({
-    validator_name              = string
-    validator_signer_address    = string
-    proxy_address               = string
-    proxy_private_key_arn       = string
-    proxy_enode_private_key_arn = string
+    validator_name                = string
+    validator_signer_address      = string
+    proxy_address                 = string
+    proxy_account_private_key_arn = string
+    proxy_enode_private_key_arn   = string
   }))
   description = "Map of proxy configurations."
 }
