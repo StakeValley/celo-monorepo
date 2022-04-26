@@ -26,3 +26,8 @@ variable iam_instance_profile {
   type    = string
   default = null
 }
+
+variable authorized_ssh_keys {
+  type = list(string)
+  default = []
+}

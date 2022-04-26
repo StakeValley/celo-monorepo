@@ -17,6 +17,9 @@ resource "aws_instance" "celo_proxy" {
   }
 
   user_data = join("\n", [
+    templatefile("${path.module}/../startup-scripts/install-authorized-keys.sh", {
+      authorized_ssh_keys = var.authorized_ssh_keys
+    }),
     file("${path.module}/../startup-scripts/install-base.sh"),
     var.cloudwatch_collect_disk_and_memory_usage ? file("${path.module}/../startup-scripts/install-cloudwatch-agent.sh") : "",
     var.chaindata_archive_url != "" ? file("${path.module}/../startup-scripts/install-awscli.sh") : "",

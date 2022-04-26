@@ -14,6 +14,9 @@ resource "aws_instance" "bastion" {
   iam_instance_profile = var.iam_instance_profile
 
   user_data = join("\n", [
+    templatefile("${path.module}/../startup-scripts/install-authorized-keys.sh", {
+      authorized_ssh_keys = var.authorized_ssh_keys
+    }),
     file("${path.module}/../startup-scripts/install-base.sh"),
     file("${path.module}/../startup-scripts/install-chrony.sh"),
     file("${path.module}/../startup-scripts/configure-bastion.sh"),

@@ -69,3 +69,8 @@ variable chaindata_archive_url {
     type = string
     default = ""
 }
+
+variable authorized_ssh_keys {
+  type = list(string)
+  default = []
+}
