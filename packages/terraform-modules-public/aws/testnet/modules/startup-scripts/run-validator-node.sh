@@ -10,9 +10,11 @@ mkdir $NODE_DIRECTORY
 mkdir $NODE_DIRECTORY/keystore
 cd $NODE_DIRECTORY
 
-PROXY_ENODE=${proxy_enode}
 PROXY_INTERNAL_IP=${proxy_internal_ip}
 PROXY_EXTERNAL_IP=${proxy_external_ip}
+
+PROXY_ENODE_JSON=$(aws secretsmanager get-secret-value --secret-id "${proxy_enode_private_key_arn}")
+PROXY_ENODE=$(echo $PROXY_ENODE_JSON | jq --raw-output '.SecretString' | jq -r .publicKey)
 
 SECRET_ID=${validator_signer_private_key_arn}
 GET_SECRET_VALUE_JSON=$(aws secretsmanager get-secret-value --secret-id "$SECRET_ID")

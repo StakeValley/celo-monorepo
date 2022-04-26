@@ -19,7 +19,9 @@ KEY_FILE_PASSWORD=$(echo $GET_SECRET_VALUE_JSON | jq --raw-output '.SecretString
 echo $KEY_FILE_CONTENTS > keystore/$KEY_FILENAME
 echo $KEY_FILE_PASSWORD > .password
 
-echo -n '${proxy_node_private_key}' > .nodeprivatekey
+PROXY_ENODE_JSON=$(aws secretsmanager get-secret-value --secret-id "${proxy_enode_private_key_arn}")
+PROXY_ENODE_PRIVATE_KEY=$(echo $PROXY_ENODE_JSON | jq --raw-output '.SecretString' | jq -r .privateKey)
+echo $PROXY_ENODE_PRIVATE_KEY > .nodekey
 
 CLOUDWATCH_LOG_GROUP_NAME=${cloudwatch_log_group_name}
 CLOUDWATCH_LOG_STREAM_NAME=${cloudwatch_log_stream_name}
@@ -37,4 +39,4 @@ if [[ ! -z $CHAINDATA_ARCHIVE_URL ]]; then
 fi
 
 # Adapted from https://docs.celo.org/getting-started/baklava-testnet/running-a-validator-in-baklava#deploy-a-proxy
-docker run -d --name celo-proxy $DOCKER_LOGGING_PARAMS --restart unless-stopped -p 30303:30303 -p 30303:30303/udp -p 30503:30503 -p 30503:30503/udp -v $PWD:/root/.celo $CELO_IMAGE --verbosity 3 --syncmode full --nousb  --proxy.proxy --proxy.proxiedvalidatoraddress $CELO_VALIDATOR_SIGNER_ADDRESS --proxy.internalendpoint :30503 --etherbase $PROXY_ADDRESS --unlock $PROXY_ADDRESS --password /root/.celo/.password --allow-insecure-unlock --baklava --datadir /root/.celo --celostats=${validator_name}@${ethstats_host} --nodekey /root/.celo/.nodeprivatekey
+docker run -d --name celo-proxy $DOCKER_LOGGING_PARAMS --restart unless-stopped -p 30303:30303 -p 30303:30303/udp -p 30503:30503 -p 30503:30503/udp -v $PWD:/root/.celo $CELO_IMAGE --verbosity 3 --syncmode full --nousb  --proxy.proxy --proxy.proxiedvalidatoraddress $CELO_VALIDATOR_SIGNER_ADDRESS --proxy.internalendpoint :30503 --etherbase $PROXY_ADDRESS --unlock $PROXY_ADDRESS --password /root/.celo/.password --allow-insecure-unlock --baklava --datadir /root/.celo --celostats=${validator_name}@${ethstats_host} --nodekey /root/.celo/.nodekey

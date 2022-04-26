@@ -72,7 +72,7 @@ locals {
      az1 = zipmap(
        keys(var.proxies.az1),
        [for k, v in var.proxies.az1 : {
-         proxy_enode      = var.proxies.az1[k].proxy_enode
+         proxy_enode_private_key_arn = var.proxies.az1[k].proxy_enode_private_key_arn
          proxy_private_ip = lookup(module.celo_proxy_az1.instances, k, { private_ip = "" }).private_ip
          proxy_public_ip  = lookup(module.celo_proxy_az1.eips, k, { public_ip = "" }).public_ip
          }
@@ -81,7 +81,7 @@ locals {
      az2 = zipmap(
        keys(var.proxies.az2),
        [for k, v in var.proxies.az2 : {
-         proxy_enode      = var.proxies.az2[k].proxy_enode
+         proxy_enode_private_key_arn = var.proxies.az2[k].proxy_enode_private_key_arn
          proxy_private_ip = lookup(module.celo_proxy_az2.instances, k, { private_ip = "" }).private_ip
          proxy_public_ip  = lookup(module.celo_proxy_az2.eips, k, { public_ip = "" }).public_ip
          }

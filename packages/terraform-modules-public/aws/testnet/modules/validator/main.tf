@@ -29,7 +29,7 @@ resource "aws_instance" "celo_validator" {
       validator_signer_address                   = each.value.signer_address
       validator_signer_private_key_arn           = each.value.signer_private_key_arn
       validator_name                             = each.value.name
-      proxy_enode                                = each.value.proxy_enode
+      proxy_enode_private_key_arn                = each.value.proxy_enode_private_key_arn
       proxy_internal_ip                          = each.value.proxy_private_ip
       proxy_external_ip                          = each.value.proxy_public_ip
       cloudwatch_log_group_name                  = var.cloudwatch_log_group_name

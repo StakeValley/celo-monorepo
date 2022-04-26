@@ -130,16 +130,14 @@ variable proxies {
       validator_signer_address        = string
       proxy_address                   = string
       proxy_private_key_arn           = string
-      proxy_node_private_key          = string
-      proxy_enode                     = string
+      proxy_enode_private_key_arn     = string
     }))
     az2 = map(object({
       validator_name                  = string
       validator_signer_address        = string
       proxy_address                   = string
       proxy_private_key_arn           = string
-      proxy_node_private_key          = string
-      proxy_enode                     = string
+      proxy_enode_private_key_arn     = string
     }))
   })
 }

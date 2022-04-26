@@ -45,7 +45,7 @@ variable validators {
     name                             = string
     signer_address                   = string
     signer_private_key_arn           = string
-    proxy_enode                      = string
+    proxy_enode_private_key_arn      = string
     proxy_private_ip                 = string
     proxy_public_ip                  = string
   }))

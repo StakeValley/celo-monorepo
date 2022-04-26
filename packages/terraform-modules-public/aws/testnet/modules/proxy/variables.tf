@@ -45,7 +45,7 @@ variable proxies {
     validator_signer_address        = string
     proxy_address                   = string
     proxy_private_key_arn           = string
-    proxy_node_private_key          = string # TODO convert to a secret
+    proxy_enode_private_key_arn     = string
   }))
   description = "Map of proxy configurations."
 }
