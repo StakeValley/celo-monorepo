@@ -18,7 +18,7 @@ variable internet_gateway_id {
   description = "ID for the internet gateway this subnet will route to"
 }
 
-variable "allowed_ssh_clients_cidr_block" {
-  type        = string
-  description = "CIDR block of allowed SSH clients."
+variable "allowed_ssh_clients_cidr_blocks" {
+  type        = list(string)
+  description = "CIDR blocks of allowed SSH clients."
 }

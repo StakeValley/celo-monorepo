@@ -20,16 +20,16 @@ module "celo_bastion_az1" {
   iam_instance_profile = var.iam_instance_profiles.bastion
 }
 
-module "celo_bastion_az2" {
-  source = "./modules/bastion"
-
-  subnet_id            = module.celo_vpc.subnet_ids.az2.public
-  security_group_id    = module.celo_vpc.security_group_ids.bastion
-  key_pair_name        = var.key_pair_name
-  name                 = "celo-bastion-az2"
-  instance_type        = var.instance_types.bastion
-  iam_instance_profile = var.iam_instance_profiles.bastion
-}
+#module "celo_bastion_az2" {
+#  source = "./modules/bastion"
+#
+#  subnet_id            = module.celo_vpc.subnet_ids.az2.public
+#  security_group_id    = module.celo_vpc.security_group_ids.bastion
+#  key_pair_name        = var.key_pair_name
+#  name                 = "celo-bastion-az2"
+#  instance_type        = var.instance_types.bastion
+#  iam_instance_profile = var.iam_instance_profiles.bastion
+#}
 
 module "celo_proxy_az1" {
   source = "./modules/proxy"

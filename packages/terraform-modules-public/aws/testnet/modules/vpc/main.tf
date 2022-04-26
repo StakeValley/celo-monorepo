@@ -33,11 +33,11 @@ data "aws_availability_zones" "available" {
 module "celo_public_subnet_az1" {
   source = "./modules/subnet-public"
 
-  vpc_id                         = aws_vpc.celo.id
-  cidr_block                     = var.cidr_blocks.subnet_az1_public
-  internet_gateway_id            = aws_internet_gateway.igw.id
-  availability_zone_id           = data.aws_availability_zones.available.zone_ids[0]
-  allowed_ssh_clients_cidr_block = var.cidr_blocks.allowed_ssh_clients
+  vpc_id                          = aws_vpc.celo.id
+  cidr_block                      = var.cidr_blocks.subnet_az1_public
+  internet_gateway_id             = aws_internet_gateway.igw.id
+  availability_zone_id            = data.aws_availability_zones.available.zone_ids[0]
+  allowed_ssh_clients_cidr_blocks = var.cidr_blocks.allowed_ssh_clients
 }
 
 module "celo_private_subnet_az1" {
@@ -53,11 +53,11 @@ module "celo_private_subnet_az1" {
 module "celo_public_subnet_az2" {
   source = "./modules/subnet-public"
 
-  vpc_id                         = aws_vpc.celo.id
-  cidr_block                     = var.cidr_blocks.subnet_az2_public
-  internet_gateway_id            = aws_internet_gateway.igw.id
-  availability_zone_id           = data.aws_availability_zones.available.zone_ids[1]
-  allowed_ssh_clients_cidr_block = var.cidr_blocks.allowed_ssh_clients
+  vpc_id                          = aws_vpc.celo.id
+  cidr_block                      = var.cidr_blocks.subnet_az2_public
+  internet_gateway_id             = aws_internet_gateway.igw.id
+  availability_zone_id            = data.aws_availability_zones.available.zone_ids[1]
+  allowed_ssh_clients_cidr_blocks = var.cidr_blocks.allowed_ssh_clients
 }
 
 module "celo_private_subnet_az2" {
@@ -116,7 +116,7 @@ resource "aws_security_group" "bastion" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.cidr_blocks.allowed_ssh_clients]
+    cidr_blocks = var.cidr_blocks.allowed_ssh_clients
   }
 
   egress {

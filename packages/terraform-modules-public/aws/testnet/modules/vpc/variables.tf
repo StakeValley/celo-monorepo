@@ -11,7 +11,7 @@ variable cidr_blocks {
     subnet_az1_private  = string
     subnet_az2_public   = string
     subnet_az2_private  = string
-    allowed_ssh_clients = string
+    allowed_ssh_clients = list(string)
   })
   description = "The cidr_blocks for the different subnets in a redundant Celo network"
   default = {
@@ -20,6 +20,6 @@ variable cidr_blocks {
     subnet_az1_private  = "10.10.1.0/24"
     subnet_az2_public   = "10.10.10.0/24"
     subnet_az2_private  = "10.10.11.0/24"
-    allowed_ssh_clients = "0.0.0.0/0"
+    allowed_ssh_clients = ["0.0.0.0/0"]
   }
 }
