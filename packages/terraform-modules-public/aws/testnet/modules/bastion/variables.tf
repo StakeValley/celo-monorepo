@@ -1,33 +1,33 @@
-variable subnet_id {
+variable "subnet_id" {
   type        = string
   description = "Subnet for the SSH Bastion"
 }
 
-variable security_group_id {
+variable "security_group_id" {
   type        = string
   description = "VPC Security group for this instance"
 }
 
-variable key_pair_name {
+variable "key_pair_name" {
   type        = string
   description = "SSH Key Pair name"
 }
 
-variable name {
+variable "name" {
   type        = string
   description = "Name for this instance"
 }
 
-variable instance_type {
+variable "instance_type" {
   type = string
 }
 
-variable iam_instance_profile {
+variable "iam_instance_profile" {
   type    = string
   default = null
 }
 
-variable authorized_ssh_keys {
-  type = list(string)
+variable "authorized_ssh_keys" {
+  type    = list(string)
   default = []
 }

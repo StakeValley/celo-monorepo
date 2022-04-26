@@ -1,10 +1,10 @@
-variable name {
+variable "name" {
   type        = string
   description = "Name of the VPC"
   default     = "celo-vpc"
 }
 
-variable cidr_blocks {
+variable "cidr_blocks" {
   type = object({
     vpc                 = string
     subnet_az1_public   = string

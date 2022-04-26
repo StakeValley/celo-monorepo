@@ -1,9 +1,9 @@
-variable region {
+variable "region" {
   type        = string
   description = "AWS Region to provision this cluster"
 }
 
-variable cidr_blocks {
+variable "cidr_blocks" {
   type = object({
     vpc                 = string
     subnet_az1_public   = string
@@ -23,7 +23,7 @@ variable cidr_blocks {
   }
 }
 
-variable instance_types {
+variable "instance_types" {
   description = "The instance type for each component"
   type        = map(string)
 
@@ -35,7 +35,7 @@ variable instance_types {
   }
 }
 
-variable iam_instance_profiles {
+variable "iam_instance_profiles" {
   description = "Optional IAM instances profile names for each component. For example, a profile that gives CloudWatch agent permissions (https://amzn.to/3gpfCt5)"
   type        = map(string)
 
@@ -47,7 +47,7 @@ variable iam_instance_profiles {
   }
 }
 
-variable cloudwatch_log_group_names {
+variable "cloudwatch_log_group_names" {
   description = "Optional log group names to log Docker output to CloudWatch. If this is set for a node type, that node will install the CloudWatch agent. Make sure iam_instance_profile is also set on that node type with CloudWatch agent permissions."
   type        = map(string)
 
@@ -59,54 +59,54 @@ variable cloudwatch_log_group_names {
   }
 }
 
-variable cloudwatch_collect_disk_and_memory_usage {
+variable "cloudwatch_collect_disk_and_memory_usage" {
   description = "Determines if the CloudWatch agent should be installed to collect disk and memory usage"
   type        = bool
   default     = false
 }
 
-variable key_pair_name {
+variable "key_pair_name" {
   type        = string
   description = "AWS Key Pair name for SSH access"
 }
 
-variable celo_image {
+variable "celo_image" {
   type        = string
   description = "Docker image for Celo nodes"
 }
 
-variable celo_network_id {
+variable "celo_network_id" {
   type        = string
   description = "ID of the Celo network to join"
 }
 
-variable celo_image_attestation {
+variable "celo_image_attestation" {
   type        = string
   description = "Docker image for Celo attestation service"
 }
 
-variable ethstats_host {
+variable "ethstats_host" {
   type        = string
   description = "Hostname for ethstats"
 }
 
-variable twilio_messaging_service_sid {
+variable "twilio_messaging_service_sid" {
   type = string
 }
 
-variable twilio_verify_service_sid {
+variable "twilio_verify_service_sid" {
   type = string
 }
 
-variable twilio_account_sid {
+variable "twilio_account_sid" {
   type = string
 }
 
-variable twilio_unsupported_regions {
+variable "twilio_unsupported_regions" {
   type = string
 }
 
-variable twilio_auth_token {
+variable "twilio_auth_token" {
   type = string
 }
 
@@ -122,66 +122,66 @@ variable twilio_auth_token {
 #   type = string
 # }
 
-variable proxies {
+variable "proxies" {
   description = "Configuration for zero or more proxies in each availability zone."
   type = object({
     az1 = map(object({
-      validator_name                  = string
-      validator_signer_address        = string
-      proxy_address                   = string
-      proxy_private_key_arn           = string
-      proxy_enode_private_key_arn     = string
+      validator_name              = string
+      validator_signer_address    = string
+      proxy_address               = string
+      proxy_private_key_arn       = string
+      proxy_enode_private_key_arn = string
     }))
     az2 = map(object({
-      validator_name                  = string
-      validator_signer_address        = string
-      proxy_address                   = string
-      proxy_private_key_arn           = string
-      proxy_enode_private_key_arn     = string
+      validator_name              = string
+      validator_signer_address    = string
+      proxy_address               = string
+      proxy_private_key_arn       = string
+      proxy_enode_private_key_arn = string
     }))
   })
 }
 
-variable validators {
+variable "validators" {
   description = "Configuration for zero or more validators in each availability zone"
   type = object({
     az1 = map(object({
-      name                        = string
-      signer_address              = string
-      signer_private_key_arn      = string
+      name                   = string
+      signer_address         = string
+      signer_private_key_arn = string
     }))
     az2 = map(object({
-      name                        = string
-      signer_address              = string
-      signer_private_key_arn      = string
+      name                   = string
+      signer_address         = string
+      signer_private_key_arn = string
     }))
   })
 }
 
-variable attestation_services {
+variable "attestation_services" {
   description = "Configuration for zero or more attestation nodes in each availability zone"
   type = object({
     az1 = map(object({
-      validator_name                          = string
-      validator_address                       = string
-      attestation_signer_address              = string
-      attestation_signer_private_key_arn      = string
+      validator_name                     = string
+      validator_address                  = string
+      attestation_signer_address         = string
+      attestation_signer_private_key_arn = string
     }))
     az2 = map(object({
-      validator_name                          = string
-      validator_address                       = string
-      attestation_signer_address              = string
-      attestation_signer_private_key_arn      = string
+      validator_name                     = string
+      validator_address                  = string
+      attestation_signer_address         = string
+      attestation_signer_private_key_arn = string
     }))
   })
 }
 
-variable chaindata_archive_url {
-    type = string
-    default = ""
+variable "chaindata_archive_url" {
+  type    = string
+  default = ""
 }
 
-variable authorized_ssh_keys {
-  type = list(string)
+variable "authorized_ssh_keys" {
+  type    = list(string)
   default = []
 }

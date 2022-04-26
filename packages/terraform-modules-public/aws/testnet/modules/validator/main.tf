@@ -26,18 +26,18 @@ resource "aws_instance" "celo_validator" {
     file("${path.module}/../startup-scripts/install-docker.sh"),
     file("${path.module}/../startup-scripts/install-chrony.sh"),
     templatefile("${path.module}/../startup-scripts/run-validator-node.sh", {
-      celo_image                                 = var.celo_image
-      celo_network_id                            = var.celo_network_id
-      ethstats_host                              = var.ethstats_host
-      validator_signer_address                   = each.value.signer_address
-      validator_signer_private_key_arn           = each.value.signer_private_key_arn
-      validator_name                             = each.value.name
-      proxy_enode_private_key_arn                = each.value.proxy_enode_private_key_arn
-      proxy_internal_ip                          = each.value.proxy_private_ip
-      proxy_external_ip                          = each.value.proxy_public_ip
-      cloudwatch_log_group_name                  = var.cloudwatch_log_group_name
-      cloudwatch_log_stream_name                 = "celo_validator_${each.key}"
-      chaindata_archive_url                      = var.chaindata_archive_url
+      celo_image                       = var.celo_image
+      celo_network_id                  = var.celo_network_id
+      ethstats_host                    = var.ethstats_host
+      validator_signer_address         = each.value.signer_address
+      validator_signer_private_key_arn = each.value.signer_private_key_arn
+      validator_name                   = each.value.name
+      proxy_enode_private_key_arn      = each.value.proxy_enode_private_key_arn
+      proxy_internal_ip                = each.value.proxy_private_ip
+      proxy_external_ip                = each.value.proxy_public_ip
+      cloudwatch_log_group_name        = var.cloudwatch_log_group_name
+      cloudwatch_log_stream_name       = "celo_validator_${each.key}"
+      chaindata_archive_url            = var.chaindata_archive_url
     }),
     file("${path.module}/../startup-scripts/final-hardening.sh")
   ])

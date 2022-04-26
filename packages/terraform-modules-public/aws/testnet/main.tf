@@ -51,7 +51,7 @@ module "celo_proxy_az1" {
 
   proxies = var.proxies.az1
 }
- 
+
 module "celo_proxy_az2" {
   source = "./modules/proxy"
 
@@ -72,26 +72,26 @@ module "celo_proxy_az2" {
 }
 
 locals {
-   proxy_settings = {
-     az1 = zipmap(
-       keys(var.proxies.az1),
-       [for k, v in var.proxies.az1 : {
-         proxy_enode_private_key_arn = var.proxies.az1[k].proxy_enode_private_key_arn
-         proxy_private_ip = lookup(module.celo_proxy_az1.instances, k, { private_ip = "" }).private_ip
-         proxy_public_ip  = lookup(module.celo_proxy_az1.eips, k, { public_ip = "" }).public_ip
-         }
-       ]
-     )
-     az2 = zipmap(
-       keys(var.proxies.az2),
-       [for k, v in var.proxies.az2 : {
-         proxy_enode_private_key_arn = var.proxies.az2[k].proxy_enode_private_key_arn
-         proxy_private_ip = lookup(module.celo_proxy_az2.instances, k, { private_ip = "" }).private_ip
-         proxy_public_ip  = lookup(module.celo_proxy_az2.eips, k, { public_ip = "" }).public_ip
-         }
-       ]
-     )
-   }
+  proxy_settings = {
+    az1 = zipmap(
+      keys(var.proxies.az1),
+      [for k, v in var.proxies.az1 : {
+        proxy_enode_private_key_arn = var.proxies.az1[k].proxy_enode_private_key_arn
+        proxy_private_ip            = lookup(module.celo_proxy_az1.instances, k, { private_ip = "" }).private_ip
+        proxy_public_ip             = lookup(module.celo_proxy_az1.eips, k, { public_ip = "" }).public_ip
+        }
+      ]
+    )
+    az2 = zipmap(
+      keys(var.proxies.az2),
+      [for k, v in var.proxies.az2 : {
+        proxy_enode_private_key_arn = var.proxies.az2[k].proxy_enode_private_key_arn
+        proxy_private_ip            = lookup(module.celo_proxy_az2.instances, k, { private_ip = "" }).private_ip
+        proxy_public_ip             = lookup(module.celo_proxy_az2.eips, k, { public_ip = "" }).public_ip
+        }
+      ]
+    )
+  }
 
   validator_params = {
     az1 = zipmap(
@@ -201,7 +201,7 @@ module "celo_attestation_service_az1" {
   subnet_id                                     = module.celo_vpc.subnet_ids.az1.public
   security_group_id                             = module.celo_vpc.security_group_ids.attestation_service
   key_pair_name                                 = var.key_pair_name
-  authorized_ssh_keys                      = var.authorized_ssh_keys
+  authorized_ssh_keys                           = var.authorized_ssh_keys
   instance_type                                 = var.instance_types.attestation_service
   celo_image                                    = var.celo_image
   celo_network_id                               = var.celo_network_id
@@ -231,7 +231,7 @@ module "celo_attestation_service_az2" {
   subnet_id                                     = module.celo_vpc.subnet_ids.az2.public
   security_group_id                             = module.celo_vpc.security_group_ids.attestation_service
   key_pair_name                                 = var.key_pair_name
-  authorized_ssh_keys                      = var.authorized_ssh_keys
+  authorized_ssh_keys                           = var.authorized_ssh_keys
   instance_type                                 = var.instance_types.attestation_service
   celo_image                                    = var.celo_image
   celo_network_id                               = var.celo_network_id
