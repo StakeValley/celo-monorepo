@@ -51,68 +51,83 @@ resource "aws_network_acl" "public" {
   tags = {
     Name = "celo-public-acl-${var.availability_zone_id}"
   }
+}
 
-  ingress {
-    rule_no    = 100
-    protocol   = "tcp"
-    from_port  = 22
-    to_port    = 22
-    cidr_block = var.allowed_ssh_clients_cidr_block
-    action     = "allow"
-  }
+resource "aws_network_acl_rule" "ssh_ingress" {
+  network_acl_id = aws_network_acl.public.id
+  egress         = false
+  count          = length(var.allowed_ssh_clients_cidr_blocks)
+  rule_number    = 100 + count.index
+  protocol       = "tcp"
+  from_port      = 22
+  to_port        = 22
+  cidr_block     = element(var.allowed_ssh_clients_cidr_blocks, count.index)
+  rule_action    = "allow"
+}
 
-  ingress {
-    rule_no    = 110
-    protocol   = "tcp"
-    from_port  = 80
-    to_port    = 80
-    cidr_block = "0.0.0.0/0"
-    action     = "allow"
-  }
+resource "aws_network_acl_rule" "http_ingress" {
+  network_acl_id = aws_network_acl.public.id
+  egress         = false
+  rule_number    = 110
+  protocol       = "tcp"
+  from_port      = 80
+  to_port        = 80
+  cidr_block     = "0.0.0.0/0"
+  rule_action    = "allow"
+}
 
-  ingress {
-    rule_no    = 120
-    protocol   = "tcp"
-    from_port  = 443
-    to_port    = 443
-    cidr_block = "0.0.0.0/0"
-    action     = "allow"
-  }
+resource "aws_network_acl_rule" "ssl_ingress" {
+  network_acl_id = aws_network_acl.public.id
+  egress         = false
+  rule_number    = 120
+  protocol       = "tcp"
+  from_port      = 443
+  to_port        = 443
+  cidr_block     = "0.0.0.0/0"
+  rule_action    = "allow"
+}
 
-  ingress {
-    rule_no    = 130
-    protocol   = "tcp"
-    from_port  = 30303
-    to_port    = 30303
-    cidr_block = "0.0.0.0/0"
-    action     = "allow"
-  }
+resource "aws_network_acl_rule" "celo_tcp_ingress" {
+  network_acl_id = aws_network_acl.public.id
+  egress         = false
+  rule_number    = 130
+  protocol       = "tcp"
+  from_port      = 30303
+  to_port        = 30303
+  cidr_block     = "0.0.0.0/0"
+  rule_action    = "allow"
+}
 
-  ingress {
-    rule_no    = 131
-    protocol   = "udp"
-    from_port  = 30303
-    to_port    = 30303
-    cidr_block = "0.0.0.0/0"
-    action     = "allow"
-  }
+resource "aws_network_acl_rule" "celo_udp_ingress" {
+  network_acl_id = aws_network_acl.public.id
+  egress         = false
+  rule_number    = 131
+  protocol       = "udp"
+  from_port      = 30303
+  to_port        = 30303
+  cidr_block     = "0.0.0.0/0"
+  rule_action    = "allow"
+}
 
-  ingress {
-    rule_no    = 140
-    protocol   = "tcp"
-    from_port  = 1024
-    to_port    = 65535
-    cidr_block = "0.0.0.0/0"
-    action     = "allow"
-  }
+resource "aws_network_acl_rule" "nat_ingress" {
+  network_acl_id = aws_network_acl.public.id
+  egress         = false
+  rule_number    = 140
+  protocol       = "tcp"
+  from_port      = 1024
+  to_port        = 65535
+  cidr_block     = "0.0.0.0/0"
+  rule_action    = "allow"
+}
 
-  egress {
-    rule_no    = 200
-    protocol   = -1
-    to_port    = 0
-    from_port  = 0
-    cidr_block = "0.0.0.0/0"
-    action     = "allow"
-  }
+resource "aws_network_acl_rule" "wildcard_egress" {
+  network_acl_id = aws_network_acl.public.id
+  egress         = true
+  rule_number    = 200
+  protocol       = -1
+  to_port        = 0
+  from_port      = 0
+  cidr_block     = "0.0.0.0/0"
+  rule_action    = "allow"
 }
 

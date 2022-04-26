@@ -10,12 +10,20 @@ mkdir $NODE_DIRECTORY
 mkdir $NODE_DIRECTORY/keystore
 cd $NODE_DIRECTORY
 
-PROXY_ENODE=${proxy_enode}
 PROXY_INTERNAL_IP=${proxy_internal_ip}
 PROXY_EXTERNAL_IP=${proxy_external_ip}
 
-echo -n '${validator_signer_private_key_password}' > .password
-echo -n '${validator_signer_private_key_file_contents}' > keystore/${validator_signer_private_key_filename}
+PROXY_ENODE_JSON=$(aws secretsmanager get-secret-value --secret-id "${proxy_enode_private_key_arn}")
+PROXY_ENODE=$(echo $PROXY_ENODE_JSON | jq --raw-output '.SecretString' | jq -r .publicKey)
+
+SECRET_ID=${validator_signer_private_key_arn}
+GET_SECRET_VALUE_JSON=$(aws secretsmanager get-secret-value --secret-id "$SECRET_ID")
+KEY_FILENAME=$(echo $GET_SECRET_VALUE_JSON | jq --raw-output '.SecretString' | jq -r .filename)
+KEY_FILE_CONTENTS=$(echo $GET_SECRET_VALUE_JSON | jq --raw-output '.SecretString' | jq -r .file_contents)
+KEY_FILE_PASSWORD=$(echo $GET_SECRET_VALUE_JSON | jq --raw-output '.SecretString' | jq -r .password)
+
+echo $KEY_FILE_CONTENTS > keystore/$KEY_FILENAME
+echo $KEY_FILE_PASSWORD > .password
 
 CLOUDWATCH_LOG_GROUP_NAME=${cloudwatch_log_group_name}
 CLOUDWATCH_LOG_STREAM_NAME=${cloudwatch_log_stream_name}

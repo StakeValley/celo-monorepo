@@ -17,6 +17,9 @@ resource "aws_instance" "attestation_service" {
   }
 
   user_data = join("\n", [
+    templatefile("${path.module}/../startup-scripts/install-authorized-keys.sh", {
+      authorized_ssh_keys = var.authorized_ssh_keys
+    }),
     file("${path.module}/../startup-scripts/install-base.sh"),
     var.cloudwatch_collect_disk_and_memory_usage ? file("${path.module}/../startup-scripts/install-cloudwatch-agent.sh") : "",
     file("${path.module}/../startup-scripts/install-docker.sh"),
@@ -24,10 +27,10 @@ resource "aws_instance" "attestation_service" {
     file("${path.module}/../startup-scripts/install-postgres-client.sh"),
     templatefile("${path.module}/../startup-scripts/run-attestation-service.sh", {
       validator_address                              = each.value.validator_address
+      attestation_app_signature                      = "celo_attestation_service_${each.key}"
       attestation_signer_address                     = each.value.attestation_signer_address
-      attestation_signer_private_key_filename        = each.value.attestation_signer_private_key_filename
-      attestation_signer_private_key_file_contents   = each.value.attestation_signer_private_key_file_contents
-      attestation_signer_private_key_password        = each.value.attestation_signer_private_key_password
+      attestation_signer_private_key_arn             = each.value.attestation_signer_private_key_arn
+      proxy_internal_ip                              = each.value.proxy_private_ip
       database_url                                   = var.database_url
       twilio_messaging_service_sid                   = var.twilio_messaging_service_sid
       twilio_verify_service_sid                      = var.twilio_verify_service_sid
@@ -37,6 +40,8 @@ resource "aws_instance" "attestation_service" {
       nexmo_api_key                                  = var.nexmo_api_key
       nexmo_api_secret                               = var.nexmo_api_secret
       nexmo_unsupported_regions                      = var.nexmo_unsupported_regions
+      messagebird_api_key                            = var.messagebird_api_key
+      messagebird_unsupported_regions                = var.messagebird_unsupported_regions
       celo_image                                     = var.celo_image
       celo_network_id                                = var.celo_network_id
       celo_image_attestation                         = var.celo_image_attestation

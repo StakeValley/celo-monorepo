@@ -1,4 +1,4 @@
-output security_group_ids {
+output "security_group_ids" {
   value = {
     attestation_service = aws_security_group.attestation_service.id
     attestation_db      = aws_security_group.attestation_db.id
@@ -9,7 +9,7 @@ output security_group_ids {
   }
 }
 
-output subnet_ids {
+output "subnet_ids" {
   value = {
     az1 = {
       private = module.celo_private_subnet_az1.id
@@ -22,6 +22,6 @@ output subnet_ids {
   }
 }
 
-output id {
+output "id" {
   value = aws_vpc.celo.id
 }
