@@ -26,7 +26,8 @@ export CONFIG_FILE_PATH=.attestationconfig
 
 # adapted from https://github.com/StakeValley/celo-monorepo/blob/master/packages/attestation-service/config/.env.development
 echo 'DATABASE_URL=${database_url}' >> $CONFIG_FILE_PATH
-echo 'CELO_PROVIDERS=https://baklava-forno.celo-testnet.org,http://${proxy_internal_ip}' >> $CONFIG_FILE_PATH
+# echo 'CELO_PROVIDERS=https://baklava-forno.celo-testnet.org,http://${proxy_internal_ip}' >> $CONFIG_FILE_PATH
+echo 'CELO_PROVIDERS=https://baklava-forno.celo-testnet.org' >> $CONFIG_FILE_PATH
 echo 'CELO_VALIDATOR_ADDRESS=0x${validator_address}' >> $CONFIG_FILE_PATH
 echo 'ATTESTATION_SIGNER_ADDRESS=0x${attestation_signer_address}' >> $CONFIG_FILE_PATH
 echo 'ATTESTATION_SIGNER_KEYSTORE_DIRPATH=/root/.celo' >> $CONFIG_FILE_PATH
@@ -80,4 +81,4 @@ else
   DOCKER_LOGGING_PARAMS="--log-driver=awslogs --log-opt awslogs-group=$ATTESTATION_SERVICE_CLOUDWATCH_LOG_GROUP_NAME --log-opt awslogs-stream=$ATTESTATION_SERVICE_CLOUDWATCH_LOG_STREAM_NAME"
 fi
 
-docker run -d --name celo-attestation-service $DOCKER_LOGGING_PARAMS --restart always --entrypoint /bin/bash --network host --env-file $CONFIG_FILE_PATH -p 80:80 -v $PWD:/root/.celo $CELO_IMAGE_ATTESTATION -c " cd /celo-monorepo/packages/attestation-service && yarn run db:migrate && yarn start "
+docker run -d --name celo-attestation-service $DOCKER_LOGGING_PARAMS --restart always --entrypoint /bin/bash --network host --env-file $CONFIG_FILE_PATH -e ATTESTATION_SIGNER_KEYSTORE_PASSPHRASE=$(cat .password) -p 80:80 -v $PWD:/root/.celo $CELO_IMAGE_ATTESTATION -c " cd /celo-monorepo/packages/attestation-service && yarn run db:migrate && yarn start "

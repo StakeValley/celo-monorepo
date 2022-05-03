@@ -22,6 +22,7 @@ resource "aws_instance" "attestation_service" {
     }),
     file("${path.module}/../startup-scripts/install-base.sh"),
     var.cloudwatch_collect_disk_and_memory_usage ? file("${path.module}/../startup-scripts/install-cloudwatch-agent.sh") : "",
+    file("${path.module}/../startup-scripts/install-awscli.sh"),
     file("${path.module}/../startup-scripts/install-docker.sh"),
     file("${path.module}/../startup-scripts/install-chrony.sh"),
     file("${path.module}/../startup-scripts/install-postgres-client.sh"),
