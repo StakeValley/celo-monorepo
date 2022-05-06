@@ -5,7 +5,7 @@ provider "aws" {
 module "celo_vpc" {
   source = "./modules/vpc"
 
-  name        = "celo-vpc"
+  name        = "${var.name}-vpc"
   cidr_blocks = var.cidr_blocks
 }
 
@@ -16,7 +16,7 @@ module "celo_bastion_az1" {
   security_group_id    = module.celo_vpc.security_group_ids.bastion
   key_pair_name        = var.key_pair_name
   authorized_ssh_keys  = var.authorized_ssh_keys
-  name                 = "celo-bastion-az1"
+  name                 = "${var.name}-bastion-az1"
   instance_type        = var.instance_types.bastion
   iam_instance_profile = var.iam_instance_profiles.bastion
 }
@@ -28,7 +28,7 @@ module "celo_bastion_az1" {
 #  security_group_id    = module.celo_vpc.security_group_ids.bastion
 #  key_pair_name        = var.key_pair_name
 #  authorized_ssh_keys  = var.authorized_ssh_keys
-#  name                 = "celo-bastion-az2"
+#  name                 = "${var.name}-bastion-az2"
 #  instance_type        = var.instance_types.bastion
 #  iam_instance_profile = var.iam_instance_profiles.bastion
 #}
@@ -48,6 +48,7 @@ module "celo_proxy_az1" {
   cloudwatch_log_group_name                = var.cloudwatch_log_group_names.proxy
   cloudwatch_collect_disk_and_memory_usage = var.cloudwatch_collect_disk_and_memory_usage
   chaindata_archive_url                    = var.chaindata_archive_url
+  cluster_name                             = var.name
 
   proxies = var.proxies.az1
 }
@@ -67,6 +68,7 @@ module "celo_proxy_az2" {
   cloudwatch_log_group_name                = var.cloudwatch_log_group_names.proxy
   cloudwatch_collect_disk_and_memory_usage = var.cloudwatch_collect_disk_and_memory_usage
   chaindata_archive_url                    = var.chaindata_archive_url
+  cluster_name                             = var.name
 
   proxies = var.proxies.az2
 }
@@ -121,6 +123,7 @@ module "celo_validator_az1" {
   cloudwatch_log_group_name                = var.cloudwatch_log_group_names.validator
   cloudwatch_collect_disk_and_memory_usage = var.cloudwatch_collect_disk_and_memory_usage
   chaindata_archive_url                    = var.chaindata_archive_url
+  cluster_name                             = var.name
 
   validators = local.validator_params.az1
 }
@@ -140,6 +143,7 @@ module "celo_validator_az2" {
   cloudwatch_log_group_name                = var.cloudwatch_log_group_names.validator
   cloudwatch_collect_disk_and_memory_usage = var.cloudwatch_collect_disk_and_memory_usage
   chaindata_archive_url                    = var.chaindata_archive_url
+  cluster_name                             = var.name
 
   validators = local.validator_params.az2
 }
@@ -221,6 +225,7 @@ module "celo_attestation_service_az1" {
   cloudwatch_attestation_node_log_group_name    = var.cloudwatch_log_group_names.attestation_node
   cloudwatch_attestation_service_log_group_name = var.cloudwatch_log_group_names.attestation_service
   cloudwatch_collect_disk_and_memory_usage      = var.cloudwatch_collect_disk_and_memory_usage
+  cluster_name                                  = var.name
 
   attestation_services = local.attestation_service_params.az1
 }
@@ -251,6 +256,7 @@ module "celo_attestation_service_az2" {
   cloudwatch_attestation_node_log_group_name    = var.cloudwatch_log_group_names.attestation_node
   cloudwatch_attestation_service_log_group_name = var.cloudwatch_log_group_names.attestation_service
   cloudwatch_collect_disk_and_memory_usage      = var.cloudwatch_collect_disk_and_memory_usage
+  cluster_name                                  = var.name
 
   attestation_services = local.attestation_service_params.az2
 }
