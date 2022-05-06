@@ -22,3 +22,7 @@ variable "allowed_ssh_clients_cidr_blocks" {
   type        = list(string)
   description = "CIDR blocks of allowed SSH clients."
 }
+
+variable "name" {
+  type        = string
+}

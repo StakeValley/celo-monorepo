@@ -21,7 +21,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.celo.id
 
   tags = {
-    Name = "celo-internet-gateway"
+    Name = "${var.name}-internet-gateway"
   }
 }
 
@@ -34,6 +34,7 @@ module "celo_public_subnet_az1" {
   source = "./modules/subnet-public"
 
   vpc_id                          = aws_vpc.celo.id
+  name                            = var.name
   cidr_block                      = var.cidr_blocks.subnet_az1_public
   internet_gateway_id             = aws_internet_gateway.igw.id
   availability_zone_id            = data.aws_availability_zones.available.zone_ids[0]
@@ -44,6 +45,7 @@ module "celo_private_subnet_az1" {
   source = "./modules/subnet-private"
 
   vpc_id               = aws_vpc.celo.id
+  name                 = var.name
   cidr_block           = var.cidr_blocks.subnet_az1_private
   availability_zone_id = data.aws_availability_zones.available.zone_ids[0]
   nat_gateway_id       = module.celo_public_subnet_az1.nat_gateway_id
@@ -54,6 +56,7 @@ module "celo_public_subnet_az2" {
   source = "./modules/subnet-public"
 
   vpc_id                          = aws_vpc.celo.id
+  name                            = var.name
   cidr_block                      = var.cidr_blocks.subnet_az2_public
   internet_gateway_id             = aws_internet_gateway.igw.id
   availability_zone_id            = data.aws_availability_zones.available.zone_ids[1]
@@ -64,6 +67,7 @@ module "celo_private_subnet_az2" {
   source = "./modules/subnet-private"
 
   vpc_id               = aws_vpc.celo.id
+  name                 = var.name
   cidr_block           = var.cidr_blocks.subnet_az2_private
   availability_zone_id = data.aws_availability_zones.available.zone_ids[1]
   nat_gateway_id       = module.celo_public_subnet_az2.nat_gateway_id
@@ -71,7 +75,7 @@ module "celo_private_subnet_az2" {
 }
 
 resource "aws_security_group" "attestation_service" {
-  name   = "celo-attestation-service"
+  name   = "${var.name}-attestation-service"
   vpc_id = aws_vpc.celo.id
 
   ingress {
@@ -97,7 +101,7 @@ resource "aws_security_group" "attestation_service" {
 }
 
 resource "aws_security_group" "attestation_db" {
-  name   = "celo-attestation-db"
+  name   = "${var.name}-attestation-db"
   vpc_id = aws_vpc.celo.id
 
   ingress {
@@ -109,7 +113,7 @@ resource "aws_security_group" "attestation_db" {
 }
 
 resource "aws_security_group" "bastion" {
-  name   = "celo-bastion"
+  name   = "${var.name}-bastion"
   vpc_id = aws_vpc.celo.id
 
   ingress {
@@ -128,7 +132,7 @@ resource "aws_security_group" "bastion" {
 }
 
 resource "aws_security_group" "full_node" {
-  name   = "celo-full-node"
+  name   = "${var.name}-full-node"
   vpc_id = aws_vpc.celo.id
 
   ingress {
@@ -161,12 +165,12 @@ resource "aws_security_group" "full_node" {
 }
 
 resource "aws_security_group" "proxy" {
-  name   = "celo-proxy"
+  name   = "${var.name}-proxy"
   vpc_id = aws_vpc.celo.id
 }
 
 resource "aws_security_group" "validator" {
-  name   = "celo-validator"
+  name   = "${var.name}-validator"
   vpc_id = aws_vpc.celo.id
 }
 

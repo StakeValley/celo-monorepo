@@ -22,3 +22,7 @@ variable "vpc_cidr_block" {
   type        = string
   description = "CIDR block for the VPC this subnet belongs to"
 }
+
+variable "name" {
+  type        = string
+}
