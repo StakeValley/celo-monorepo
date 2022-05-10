@@ -74,3 +74,7 @@ variable "authorized_ssh_keys" {
   type    = list(string)
   default = []
 }
+
+variable "cluster_name" {
+  type        = string
+}

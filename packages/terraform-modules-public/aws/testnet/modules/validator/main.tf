@@ -43,7 +43,7 @@ resource "aws_instance" "celo_validator" {
   ])
 
   tags = {
-    Name = "celo-validator-${each.value.name}"
+    Name = "${var.cluster_name}-validator-${each.value.name}"
   }
 
   lifecycle {

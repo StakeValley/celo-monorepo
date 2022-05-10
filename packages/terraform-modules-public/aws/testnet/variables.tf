@@ -3,6 +3,11 @@ variable "region" {
   description = "AWS Region to provision this cluster"
 }
 
+variable "name" {
+  type        = string
+  default     = "celo"
+}
+
 variable "cidr_blocks" {
   type = object({
     vpc                 = string

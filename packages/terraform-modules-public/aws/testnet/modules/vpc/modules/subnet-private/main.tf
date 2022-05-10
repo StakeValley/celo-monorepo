@@ -4,7 +4,7 @@ resource "aws_subnet" "private" {
   availability_zone_id = var.availability_zone_id
 
   tags = {
-    Name = "celo-private-${var.availability_zone_id}"
+    Name = "${var.name}-private-${var.availability_zone_id}"
   }
 }
 
@@ -17,7 +17,7 @@ resource "aws_route_table" "private" {
   }
 
   tags = {
-    Name = "celo-private-route-table-${var.availability_zone_id}"
+    Name = "${var.name}-private-route-table-${var.availability_zone_id}"
   }
 }
 
@@ -31,7 +31,7 @@ resource "aws_network_acl" "private" {
   subnet_ids = [aws_subnet.private.id]
 
   tags = {
-    Name = "celo-private-acl-${var.availability_zone_id}"
+    Name = "${var.name}-private-acl-${var.availability_zone_id}"
   }
 
   ingress {

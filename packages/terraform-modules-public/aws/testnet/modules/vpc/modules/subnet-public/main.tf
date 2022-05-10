@@ -4,7 +4,7 @@ resource "aws_subnet" "public" {
   availability_zone_id = var.availability_zone_id
 
   tags = {
-    Name = "celo-public-${var.availability_zone_id}"
+    Name = "${var.name}-public-${var.availability_zone_id}"
   }
 }
 
@@ -12,7 +12,7 @@ resource "aws_eip" "nat" {
   vpc = true
 
   tags = {
-    Name = "celo-nat-eip"
+    Name = "${var.name}-nat-eip"
   }
 }
 
@@ -21,7 +21,7 @@ resource "aws_nat_gateway" "nat" {
   subnet_id     = aws_subnet.public.id
 
   tags = {
-    Name = "celo-nat-gateway-${var.availability_zone_id}"
+    Name = "${var.name}-nat-gateway-${var.availability_zone_id}"
   }
 }
 
@@ -34,7 +34,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name = "celo-public-route-table-${var.availability_zone_id}"
+    Name = "${var.name}-public-route-table-${var.availability_zone_id}"
   }
 }
 
@@ -49,7 +49,7 @@ resource "aws_network_acl" "public" {
   subnet_ids = [aws_subnet.public.id]
 
   tags = {
-    Name = "celo-public-acl-${var.availability_zone_id}"
+    Name = "${var.name}-public-acl-${var.availability_zone_id}"
   }
 }
 
